@@ -9,14 +9,15 @@ on:
   workflow_dispatch:
 
 jobs:
-  tests:
-    name: Tests
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: ./.github/workflows/tests
+  # tests:
+  #   name: Tests
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v1
+  #     - uses: ./.github/workflows/tests
   prepare:
     name: Prepare
+    # needs: [tests]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -57,7 +58,7 @@ jobs:
       tag: ${{ steps.description.outputs.tag }}
   build:
     runs-on: windows-latest
-    needs: [tests, prepare]
+    needs: [prepare]
     steps:
     - uses: actions/checkout@v1
     - name: Set up Python 3.8
