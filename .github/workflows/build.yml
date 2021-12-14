@@ -41,7 +41,7 @@ jobs:
           echo "::set-output name=sha8::$sha8"
           prev_tag=$(git for-each-ref refs/tags --sort=-committerdate --format='%(refname:short)' --count=1)
           echo "::set-output name=prev_tag::${prev_tag}"
-          if [ "${prev_tag}" = "" ]; then CHANGELOG=''; else CHANGELOG=$(git shortlog --no-merges HEAD --not ${prev_tag}); fi
+          if [ "${prev_tag}" = "" ]; then CHANGELOG=$(git log -1 --pretty=%B); else CHANGELOG=$(git shortlog --no-merges HEAD --not ${prev_tag}); fi
           CHANGELOG="${CHANGELOG//'%'/'%25'}"
           CHANGELOG="${CHANGELOG//$'\n'/'%0A'}"
           CHANGELOG="${CHANGELOG//$'\r'/'%0D'}"
