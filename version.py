@@ -1,12 +1,25 @@
-__version__ = 'v1.0.0.0-dev'
-__version_info__ = (1, 0, 0, 0)
+import sys
+
 __title__ = 'py-version'
 __author__ = 'Just Me'
 __license__ = 'MIT'
 __copyright__ = 'Copyright 2021 by Me'
 
+version_head = '1.0.0'
+__version__ = f'v{version_head}.0-dev'
 
-def generate_rc() -> str:
+
+def generate_rc(version=__version__) -> str:
+    version_raw = "".join(
+        filter(
+            lambda s: str.isdigit(s) or s == '.',
+            version.split('-')[0]
+        )
+    )
+    __version_info__ = tuple(
+        [int(n) for n in version_raw.split('.', maxsplit=5)]
+    )
+
     return f"""VSVersionInfo(
   ffi=FixedFileInfo(
   filevers={__version_info__},
@@ -25,7 +38,7 @@ def generate_rc() -> str:
       u'040904B0',
       [StringStruct(u'CompanyName', u'{__author__}'),
       StringStruct(u'FileDescription', u'{__title__}'),
-      StringStruct(u'FileVersion', u'{__version_info__}'),
+      StringStruct(u'FileVersion', u'{version_raw}'),
       StringStruct(u'InternalName', u'{__title__}'),
       StringStruct(u'LegalCopyright', u'{__copyright__}'),
       StringStruct(u'OriginalFilename', u'{__title__}.exe'),
@@ -39,4 +52,7 @@ def generate_rc() -> str:
 
 
 if __name__ == '__main__':
-    print(generate_rc())
+    if len(sys.argv) == 1:
+        print(version_head)
+    else:
+        print(generate_rc(sys.argv[1]))

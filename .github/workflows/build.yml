@@ -73,8 +73,8 @@ jobs:
         pip install pyinstaller
     - name: build with pyinstaller
       run: |
-        echo "__version__ = '${{ needs.prepare.outputs.tag }}'" >> version.py
-        version.py > version.rc
+        (Get-Content -path version.py -Raw) -replace 'v{version_head}.0-dev','${{ needs.prepare.outputs.tag }}'
+        python version.py ${{ needs.prepare.outputs.tag }} > version.rc
         pyinstaller --onefile ./application.py --version-file=version.rc
     - name: Create Release
       id: create_release
