@@ -1,5 +1,22 @@
 import sys
 
+"""
+Version data. Similar to AssemblyInfo
+
+Format:
+  MAJOR_VERSION.MINOR_VERSION.PATCH.BUILD-sha1short-dev
+
+Where MAJOR_VERSION and MINOR_VERSION versions you have to set depends on
+  application roadmap and milestones
+PATCH: 0 - alpha, 1 - beta, 2 - release candidate, 3 - release
+BUILD - incremental build number
+sha1short - 8 chars of sha1 to identify wich commit used
+dev - optional tag to mark that it is not real release and made internally
+  for tests
+
+Please read https://semver.org/ for extra information
+"""
+
 __title__ = 'py-version'
 __author__ = 'Just Me'
 __license__ = 'MIT'
@@ -55,7 +72,7 @@ if __name__ == '__main__':
     if len(sys.argv) > 1 and sys.argv[1] == '--get-head':
         print(version_head)
     else:
-      if (len(sys.argv) > 1):
-        print(generate_rc(sys.argv[1]))
-      else:
-        print(generate_rc())
+        if (len(sys.argv) > 1):
+            print(generate_rc(sys.argv[1]))
+        else:
+            print(generate_rc())
