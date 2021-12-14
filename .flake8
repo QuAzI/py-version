@@ -1,0 +1,15 @@
+[flake8]
+ignore =
+    E402
+#max-line-length = 92
+exclude =
+    migrations
+    __pycache__
+    .pytest_cache
+    manage.py
+    settings.py
+    env
+    .env
+    .venv
+    .venv.*
+max-complexity = 10

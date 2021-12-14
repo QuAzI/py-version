@@ -1,0 +1,17 @@
+name: tests
+on: 
+  push:
+    branches:
+    #   - "**"
+    #   - '!master'
+    #   - '!main'
+    #   - '!release/**'
+  pull_request:
+
+jobs:
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: ./.github/workflows/tests
