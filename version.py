@@ -52,7 +52,10 @@ def generate_rc(version=__version__) -> str:
 
 
 if __name__ == '__main__':
-    if len(sys.argv) == 1:
+    if len(sys.argv) > 1 and sys.argv[1] == '--get-head':
         print(version_head)
     else:
+      if (len(sys.argv) > 1):
         print(generate_rc(sys.argv[1]))
+      else:
+        print(generate_rc())
