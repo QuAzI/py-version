@@ -50,7 +50,7 @@ jobs:
           echo "::set-output name=version::${VERSION}"
           TAG=$(git tag --points-at HEAD)
           NEW_TAG=v${VERSION}-$sha8
-          if [ ! "$POSTFIX" = "" ]; then NEW_TAG="$NEW_TAG-$POSTFIX"; fi
+          if [ "$IS_PRE" = "true" ]; then NEW_TAG="$NEW_TAG-dev"; fi
           if [ -z "$TAG" ]; then TAG=$NEW_TAG; fi
           echo "::set-output name=tag::${TAG}"
     outputs:
