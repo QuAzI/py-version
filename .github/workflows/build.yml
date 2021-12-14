@@ -9,15 +9,15 @@ on:
   workflow_dispatch:
 
 jobs:
-  # tests:
-  #   name: Tests
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v1
-  #     - uses: ./.github/workflows/tests
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: ./.github/workflows/tests
   prepare:
     name: Prepare
-    # needs: [tests]
+    needs: [tests]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -31,7 +31,7 @@ jobs:
           BRANCH: ${{ github.ref_name }}
         run: |
           MAIN_BRANCH="master"
-          VERSION=`python version.py --get-head`.${{ github.run_number }}
+          VERSION=`python ./src/version.py --get-head`.${{ github.run_number }}
           if [ -n "$(git config init.defaultBranch)" ]; then MAIN_BRANCH="$(git config init.defaultBranch)"; fi
           if [[ "$BRANCH" == "$MAIN_BRANCH" || "$BRANCH" == release/* ]]; then IS_PRE='false'; else IS_PRE='true'; fi
           if [ "$IS_PRE" = "false" ]; then POSTFIX=''; else POSTFIX="${{ github.ref_name }}"; fi
@@ -77,11 +77,11 @@ jobs:
         pip install pyinstaller
     - name: build with pyinstaller
       run: |
-        (Get-Content -path version.py -Raw) -replace 'v{version_head}.0-dev','${{ needs.prepare.outputs.tag }}' > version.py.tmp
-        del .\version.py
-        move .\version.py.tmp .\version.py
-        python version.py > version.rc
-        pyinstaller --onefile ./application.py --version-file=version.rc
+        (Get-Content -path version.py -Raw) -replace 'v{version_head}.0-dev','${{ needs.prepare.outputs.tag }}' > ./src/version.py.tmp
+        del ./src/version.py
+        move ./src/version.py.tmp ./src/version.py
+        python ./src/version.py > ./version.rc
+        pyinstaller --onefile ./src/application.py --version-file=version.rc
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1

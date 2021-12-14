@@ -60,12 +60,11 @@ def generate_rc(version=__version__) -> str:
       StringStruct(u'LegalCopyright', u'{__copyright__}'),
       StringStruct(u'OriginalFilename', u'{__title__}.exe'),
       StringStruct(u'ProductName', u'{__title__}'),
-      StringStruct(u'ProductVersion', u'{__version__}')])
+      StringStruct(u'ProductVersion', u'{version}')])
     ]),
     VarFileInfo([VarStruct(u'Translation', [1033, 1049])])
   ]
-)
-    """
+)"""
 
 
 if __name__ == '__main__':
