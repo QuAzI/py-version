@@ -77,7 +77,7 @@ jobs:
         pip install pyinstaller
     - name: build with pyinstaller
       run: |
-        (Get-Content -path version.py -Raw) -replace 'v{version_head}.0-dev','${{ needs.prepare.outputs.tag }}' > ./src/version.py.tmp
+        (Get-Content -path ./src/version.py -Raw) -replace 'v{version_head}.0-dev','${{ needs.prepare.outputs.tag }}' > ./src/version.py.tmp
         del ./src/version.py
         move ./src/version.py.tmp ./src/version.py
         python ./src/version.py > ./version.rc
